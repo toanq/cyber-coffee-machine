@@ -1,4 +1,4 @@
-﻿namespace cyber_coffee_machie.Models
+﻿namespace Api.Models
 {
     public class BrewCoffeeResponse
     {
