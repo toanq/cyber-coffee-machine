@@ -1,3 +1,4 @@
+using Api.Client;
 using Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ICoffeeCountService, CoffeeCountService>();
+
+builder.Services.AddHttpClient<OpenWeatherClient>();
 
 var app = builder.Build();
 

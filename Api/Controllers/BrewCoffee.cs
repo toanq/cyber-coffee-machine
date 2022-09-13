@@ -1,8 +1,8 @@
-﻿using Api.Extensions;
+﻿using Api.Client;
+using Api.Extensions;
 using Api.Models;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace cyber_coffee_machie.Controllers
 {
@@ -11,18 +11,22 @@ namespace cyber_coffee_machie.Controllers
     {
         private readonly ILogger<BrewCoffee> _logger;
         private readonly ICoffeeCountService _count;
+        private readonly OpenWeatherClient _client;
+        private readonly double LIMIT_TEMPERATURE = 30.0;
         public BrewCoffee(
             ILogger<BrewCoffee> logger,
-            ICoffeeCountService count
+            ICoffeeCountService count,
+            OpenWeatherClient client
         )
         {
             _logger = logger;
             _count = count;
+            _client = client;
         }
 
         [HttpGet]
         [Route("brew-coffee")]
-        public IActionResult RequestBrewCoffee()
+        public async Task<IActionResult> RequestBrewCoffee()
         {
             if (DateTimeOffset.Now.IsAprilFools())
                 return HttpStatusCodeResult(StatusCodes.Status418ImATeapot);
@@ -38,12 +42,17 @@ namespace cyber_coffee_machie.Controllers
             {
                 _logger.LogInformation("5th call, reset the count", _count.Value);
                 _count.Reset();
-                
+
                 return HttpStatusCodeResult(StatusCodes.Status503ServiceUnavailable);
             }
 
-            _logger.LogInformation("Prepare a coffe, current count is {0}", _count.Value);
+            _logger.LogInformation("Prepare a coffe, current count is {value}", _count.Value);
             _count.Increase();
+
+            if (await _client.GetCurrentTemperature() > LIMIT_TEMPERATURE)
+            {
+                response.Message = "Your refreshing iced coffee is ready";
+            }
 
             return Ok(response);
         }
