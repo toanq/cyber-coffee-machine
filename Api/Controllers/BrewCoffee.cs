@@ -9,10 +9,11 @@ namespace cyber_coffee_machie.Controllers
     [ApiController]
     public class BrewCoffee : ControllerBase
     {
+        private readonly double LIMIT_TEMPERATURE = 30.0;
+
         private readonly ILogger<BrewCoffee> _logger;
         private readonly ICoffeeCountService _count;
         private readonly OpenWeatherClient _client;
-        private readonly double LIMIT_TEMPERATURE = 30.0;
         public BrewCoffee(
             ILogger<BrewCoffee> logger,
             ICoffeeCountService count,
