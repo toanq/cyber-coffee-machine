@@ -34,7 +34,7 @@ namespace Api.Extensions.Tests
             var result = timeOffset.IsAprilFools();
 
             // Assert
-            Assert.AreEqual(result, false);
+            Assert.AreEqual(result, true);
         }
     }
 }

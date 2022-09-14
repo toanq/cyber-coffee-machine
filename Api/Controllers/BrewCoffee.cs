@@ -4,7 +4,7 @@ using Api.Models;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cyber_coffee_machie.Controllers
+namespace Api.Controllers
 {
     [ApiController]
     public class BrewCoffee : ControllerBase

@@ -1,4 +1,8 @@
-obj
-bin
 .git
 .vs
+.vscode
+
+obj
+bin
+
+TestResults
